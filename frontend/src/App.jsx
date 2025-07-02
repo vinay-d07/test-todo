@@ -9,7 +9,7 @@ function App() {
   const url = import.meta.env.VITE_API_URL || "http://localhost:5000/todos"
 
   const fetchTodos = async () => {
-    const response = await fetch(url)
+    const response = await fetch(`${url}/todos`)
     const data = await response.json()
     setTodos(data)
   }
@@ -18,7 +18,7 @@ function App() {
     if (data.todo && data.todo.trim() !== '') {
       setTodos([{ title: data.todo, completed: false }, ...todos])
       try {
-        const response = await fetch(url, {
+        const response = await fetch(`${url}/todos`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -40,7 +40,7 @@ function App() {
   }
   const deleteTodo = async (id) => {
     try {
-      const response = await fetch(`${url}/${id}`, {
+      const response = await fetch(`${url}/todos/${id}`, {
         method: "DELETE",
       })
       if (!response.ok) {
